@@ -8,7 +8,7 @@ const searchBrave = defineFunction({
   inputSchema: z.object({
     q: z.string().describe('Søkeordet brukeren vil søke på')
   }),
-  onputSchema: z.object({
+  outputSchema: z.object({
     resultater: z.array(
       z.object({
         tittel: z.string(),
@@ -29,7 +29,7 @@ const searchBrave = defineFunction({
 
     const data = await response.json()
 
-    const resultater = data.web?.results?.mao(r => ({
+    const resultater = data.web?.results?.map(r => ({
       tittel: r.title,
       lenke: r.url,
       beskrivelse: r.description
