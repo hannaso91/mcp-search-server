@@ -1,59 +1,46 @@
-  import express from 'express';
-  import fetch from 'node-fetch';
+import { createServer, defineFunction } from '@modelcontextprotocol/sdk';
+import { z } from 'zod';
+import fetch from 'node-fetch';
 
-
-  const app = express();
-
-  app.get('/', (req, res) => {
-    res.send('Serveren din funker, Hanna!');
-  });
-
-  const PORT = 3000;
-  app.listen(PORT, () => {
-    console.log(`Server kjører på http://localhost:${PORT}`);
-  });
-
-
-  //Hele biten med å sette opp en server fikk jeg hjelp med av Chatgpt, dette var nytt for meg og jeg har egentlig 
-  //aldri satt opp en eneste server. Prøvde å lese på informasjonen om MCP, men fant ingenting om javascript så måtte få litt hjelp av AI her i starten, Alt over her er chatgpt som har hjulpet meg med. Valgte AI for å effektivisere
-
-  // Jeg valgte å bruke brave search API ettersom arbeid med API er veldig nytt for meg, kun vært borti ticketmaster sin i forbindelse med eksamen i Utvikling av interaktive nettsider
-
-
-  app.get(`/search`, async (req, res) => {
-
-    const params = new URLSearchParams({
-      q: 'matoppskrifter'
-    });
+const searchBrave = defineFunction({
+  name: 'searchBrave',
+  description: 'Søk etter informasjon via Brave search API',
+  inputSchema: z.object({
+    q: z.string().describe('Søkeordet brukeren vil søke på')
+  }),
+  onputSchema: z.object({
+    resultater: z.array(
+      z.object({
+        tittel: z.string(),
+        lenke: z.string(),
+        beskrivelse: z.string()
+      })
+    )
+  }),
+  handler: async ({q}) => {
+    const params = new URLSearchParams({q})
 
     const response = await fetch(`https://api.search.brave.com/res/v1/web/search?${params}`, {
-      method: 'get',
       headers: {
         'Accept': 'application/json',
-        'Accept-Encoding': 'gzip',
-        'x-subscription-token': 'BSAywgQshX3Hr_uSmrMbevOf7RTkVrj',
-      },
+        'X-Subscription-Token': 'BSAywgQshX3Hr_uSmrMbevOf7RTkVrj'
+      }
     });
 
-    const body = await response.json();
+    const data = await response.json()
 
-    console.log(body)
-
-    const resultater = body.web?.results?.slice(0, 3).map(r => ({
+    const resultater = data.web?.results?.mao(r => ({
       tittel: r.title,
       lenke: r.url,
       beskrivelse: r.description
-    })) || [];
+    })) || []
 
-    res.json({
-      søk: req.query.q,
-      resultater
-    });
+    return {resultater}
+  }
+})
 
-  } )
-  
-
-
-
-
-
+createServer({
+  functions: [searchBrave]
+}).listen(3000, () => {
+  console.log(`MCP-server kjører på localhost:3000`)
+})

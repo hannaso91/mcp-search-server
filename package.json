@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/hannaso91/mpc-weather-server#readme",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2",
-    "opencage-api-client": "^1.1.0"
+    "opencage-api-client": "^1.1.0",
+    "zod": "^3.25.28"
   }
 }
