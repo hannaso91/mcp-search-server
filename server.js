@@ -11,7 +11,6 @@ const server = new McpServer({
   },
 });
 
-
 async function makeRequest(url) {
   const headers = {
         'Accept': 'application/json',
@@ -37,8 +36,8 @@ server.tool(
     search: z.string().describe('Søkeordet brukeren vil søke på'),
   },
   async ({ search }) => {
-    const alertsUrl = `https://api.search.brave.com/res/v1/web/search?q=${search}`;
-    const searchData = await makeRequest(alertsUrl);
+    const searchUrl = `https://api.search.brave.com/res/v1/web/search?q=${search}`;
+    const searchData = await makeRequest(searchUrl);
 
     if (!searchData || !searchData.web || !Array.isArray(searchData.web.results)) {
       return {

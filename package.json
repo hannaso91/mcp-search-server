@@ -1,5 +1,5 @@
 {
-  "name": "mpc-weather-server",
+  "name": "mcp-search-server",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hannaso91/mpc-weather-server.git"
+    "url": "git+https://github.com/hannaso91/mcp-search-server.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hannaso91/mpc-weather-server/issues"
+    "url": "https://github.com/hannaso91/mcp-search-server/issues"
   },
-  "homepage": "https://github.com/hannaso91/mpc-weather-server#readme",
+  "homepage": "https://github.com/hannaso91/mcp-search-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "cors": "^2.8.5",
