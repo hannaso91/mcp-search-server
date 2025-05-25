@@ -1,11 +1,11 @@
 {
   "name": "mpc-weather-server",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "build": "tsc && chmod 755 server.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,9 @@
     "node-fetch": "^3.3.2",
     "opencage-api-client": "^1.1.0",
     "zod": "^3.25.28"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
   }
 }
